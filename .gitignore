@@ -1,0 +1,8 @@
+*.swp
+*~
+.redo
+run-perl
+*.syntax
+*.ttested
+default.syntax.do
+default.ttested.do

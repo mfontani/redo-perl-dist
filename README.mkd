@@ -1,0 +1,75 @@
+redo-perl-dist
+==============
+
+A set of `.do` files to help development of a Perl dist
+
+Foreword
+--------
+
+During the development of a Perl distribution or set of modules and binaries, one may repeatedly perform the following actions:
+
+- check the just-saved file(s) for syntax errors
+- run the tests associated with the just-saved file(s)
+
+At the last [Glasgow Perl Mongers][1] meeting, [Pozorvlak][2] had a talk about [Redo][3]. You can find his blog post [here][4].
+
+This repository is my attempt (so far working!) to perform the following actions when developing in a Perl repository:
+
+- Check syntax of all `.pm` files under `lib/`
+- Check syntax of all `.t` files under `t/`
+- Check syntax of all executable files under `bin/`
+- Prove `.t` files under `t/`
+
+Why use redo?
+-------------
+
+This set of [Redo][3] files allows the above actions to be performed only when necessary. This means:
+
+- On a clean repository, run all of the above actions (worst case scenario)
+- When a `.pm` file has changed, check its syntax and run prove on any tests which `use_ok()` it
+- When a `.t` file has changed, check its syntax and run prove on it
+- When an executable file has changed, check its syntax (after all `.pm` and `.t` have been "done")
+
+How to use this repository
+--------------------------
+
+Your Perl project needs to be layed out as follows:
+
+- Binaries (files whose syntax you want to check) need to be in `bin/`
+- Modules (`*.pm`) should reside in `lib/`
+- Tests (`*.t`) should reside in `t/` _and_ should contain a `use_ok()` line for each module they test
+
+If the above is true, use this repository as follows:
+
+- Copy the `*.do` files to your distribution's root directory. In order for this set of scripts to work, the root needs to also be managed under Git, as the code uses `git rev-parse --print-cdup`.
+- Run `redo`. This will setup the repository (create symlinks under `bin/`, `lib/` and `t/` to the needed `.do` files), and then start checking the syntax of files and run tests
+
+Now the repository is ready to be developed on! Test the following:
+
+Touch a `.pm` file under `lib/` and run `redo`. The following will happen:
+
+- Since the `.pm` file has changed, its syntax is checked -- if it's not valid, the process will abort.
+- Since the `.pm` file syntax has passed, any tests which contain `use_ok()` for that module will be run
+
+Touch a `.t` file under `t/` and run `redo`. The following will happen:
+- Since the `.t` file changed, the test will be re-run
+
+Copyright and Information
+-------------------------
+
+Please use the Issues tab on Github if you have a patch or found a bug.
+
+Copyright (c) 2011, Marco Fontani <mfontani@cpan.org>. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+- The names of its contributors may not be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL Marco Fontani BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+[1]: http://glasgow.pm.org/
+[2]: https://github.com/pozorvlak
+[3]: https://github.com/apenwarr/redo
+[4]: http://pozorvlak.livejournal.com/159621.html
