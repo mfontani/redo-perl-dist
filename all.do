@@ -1,4 +1,3 @@
-redo setup
 redo syntax
 redo tests
 

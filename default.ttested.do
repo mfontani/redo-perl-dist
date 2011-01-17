@@ -8,6 +8,6 @@
 GITROOT=./$(git rev-parse --show-cdup)
 redo-ifchange $1 $(grep use_ok $1 | perl -nle"next unless /use_ok\W+([a-z0-9:]+)'/i;\$m=\$1;\$m=~s,::,/,g;print qq,$GITROOT/lib/\$m.pm.syntax,")
 echo "Running test $1" > /dev/stderr
-prove -I$GITROOT/lib $GITROOT/t/$1 > $3
+prove -I$GITROOT/lib $1 > $3
 
 # vim: syntax=sh :
