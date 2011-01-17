@@ -42,7 +42,7 @@ Your Perl project needs to be layed out as follows:
 If the above is true, use this repository as follows:
 
 - Copy the `*.do` files to your distribution's root directory. In order for this set of scripts to work, the root needs to also be managed under Git, as the code uses `git rev-parse --print-cdup`.
-- Run `redo`. This will setup the repository (create symlinks under `bin/`, `lib/` and `t/` to the needed `.do` files), and then start checking the syntax of files and run tests
+- Run `redo`. This will start checking the syntax of files and run tests
 
 Now the repository is ready to be developed on! Test the following:
 
@@ -52,6 +52,7 @@ Touch a `.pm` file under `lib/` and run `redo`. The following will happen:
 - Since the `.pm` file syntax has passed, any tests which contain `use_ok()` for that module will be run
 
 Touch a `.t` file under `t/` and run `redo`. The following will happen:
+
 - Since the `.t` file changed, the test will be re-run
 
 Copyright and Information
