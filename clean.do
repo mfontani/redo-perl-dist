@@ -1,4 +1,6 @@
 touch x
+rm -rf x .redo/
+touch x
 rm x $(find . -name 'run-perl')
 touch x
 rm x $(find lib/ -name '*.pmtested')
